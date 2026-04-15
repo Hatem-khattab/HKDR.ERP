@@ -1,0 +1,104 @@
+﻿@model IEnumerable<HKDR.UI.Areas.HR.Models.Employee.EmployeeViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "System Selection";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payroll Dashboard</title>
+    <link href="~/css/viewemployee.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/hr-dashboard.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="nav-header">
+        <div class="header-container">
+            <div class="brand-logo">
+                <img src="~/assets/images/logo/HKDR_LOGO.png" alt="UIUXOtor Logo">
+                <div class="brand-text">
+                    <span class="brand-name">HKDR</span>
+                    <span class="brand-subtext">ERP System</span>
+                </div>
+            </div>
+
+            <nav class="top-nav">
+                <ul class="nav-list">
+                    <li>
+                        <a href="/HR/HrDashBoard/HrDashBoard" class="btn btn-primary">
+                            <i class="fa-solid fa-gauge-high"></i> Dash Board
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/HR/Employees/Index" class="btn btn-primary">
+                            <i class="fa-solid fa-gauge-high"></i> Dash Board
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="HR" asp-controller="Employees" asp-action="SalaryDef">
+                            <i class="icon-staff"></i> Salary Definition
+                        </a>
+                    </li>
+                    <li class="active"><a href="#"><i class="icon-payroll"></i> Payroll</a></li>
+                    <li><a href="#"><i class="icon-memo"></i> Memo</a></li>
+                    <li><a href="#"><i class="icon-circulars"></i> Circulars</a></li>
+                    <li><a href="#"><i class="icon-maintenance"></i> Maintenance</a></li>
+                    <li><a href="#"><i class="icon-logistics"></i> Logistics</a></li>
+                    <li><a href="#"><i class="icon-notif"></i> Notifications</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+<div class="salary-container">
+    <div class="header-section">
+        <h2>Employee List</h2>
+        <a asp-action="Create" class="btn-create">Create New Employee</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="salary-table">
+            <thead>
+                <tr>
+                    <th>S/N</th>
+                    <th>Full Name</th>
+                    <th>Job Title</th>
+                    <th>Dept.</th>
+                    <th>Basic Salary</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int sn = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@(sn++.ToString("D2"))</td>
+                        <td>@item.FullName</td>
+                        <td>@item.JobTitle</td>
+                        <td>@item.DepartmentName</td>
+                        <td>@item.BasicSalary.ToString("N2")</td>
+                        <td>
+                            <span class="status-badge @(item.IsActive ? "active" : "inactive")">
+                                @(item.IsActive ? "Active" : "Inactive")
+                            </span>
+                        </td>
+                        <td class="action-links">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="edit-link">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="delete-link">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

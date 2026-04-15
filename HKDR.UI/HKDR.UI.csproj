@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\images\logo\HKDR_LOGO.png" />
+    <None Include="wwwroot\assets\images\logo\human_logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HKDR.Common\HKDR.Common.csproj" />
+    <ProjectReference Include="..\HKDR.DomainEntities\HKDR.DomainEntities.csproj" />
+    <ProjectReference Include="..\HKDR.Infrastructure\HKDR.Infrastructure.csproj" />
+    <ProjectReference Include="..\HKDR.IOC\HKDR.IOC.csproj" />
+    <ProjectReference Include="..\HKDR.Repository\HKDR.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Pages\SystemSelection\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+</Project>

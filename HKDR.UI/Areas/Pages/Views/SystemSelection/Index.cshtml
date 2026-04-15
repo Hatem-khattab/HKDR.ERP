@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "System Selection";
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "System Selection";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/Areas/Pages/views/styles.css" />
+    <link rel="stylesheet" href="~/css/system-selection.css" />
+    <link rel="stylesheet" href="~/Areas/Pages/SystemSelection/style.css" />
+    <link href="c:\users\hatem\source\repos\hkdr.erp\hkdr.ui\wwwroot\css\site.css" rel="stylesheet" />
+</head>
+<body>
+
+    
+
+    <!-- SYSTEM SELECTION -->
+    <main class="system-selection">
+        <div class="choose-your-system">
+            <h1>اختر النظام الذي تريد استخدامه</h1>
+
+        </div>
+        <div class="cards-container">
+
+            <!-- HR System Card -->
+            <div class="card" style="--card-color: #0F4C5C;">
+                <img src="~/assets/images/systems/hr.jpeg" alt="HR System">
+                <h2>HR System</h2>
+
+                <a href="/HR/HrDashBoard/HrDashBoard" class="btn btn-primary">
+                    Enter System
+                </a>
+            </div>
+
+            <!-- Accounting System Card -->
+            <div class="card" style="--card-color: #1E6F5C;">
+                <img src="~/assets/images/systems/accounting(1).jpeg" alt="Accounting System">
+                <h2>Accounting System</h2>
+                <a asp-area="Pages" asp-controller="Accounting" asp-action="Index" class="btn">Enter System</a>
+            </div>
+
+            <!-- Inventory System Card -->
+            <div class="card" style="--card-color: #B85C00;">
+                <img src="~/assets/images/systems/inventory.jpeg" alt="Inventory System">
+                <h2>Inventory System</h2>
+                <a asp-area="Pages" asp-controller="Inventory" asp-action="Index" class="btn">Enter System</a>
+            </div>
+
+            <!-- purchaseing System Card -->
+            <div class="card" style="--card-color: #4B3F72;">
+                <img src="~/assets/images/systems/Purchasing.jpeg" alt="CRM System">
+                <h2>CRM System</h2>
+                <a asp-area="Pages" asp-controller="CRM" asp-action="Index" class="btn">Enter System</a>
+            </div>
+
+            <!-- sales System Card -->
+            <div class="card" style="--card-color: #4B3F72;">
+                <img src="~/assets/images/systems/sales(2).jpeg" alt="CRM System">
+                <h2>CRM System</h2>
+                <a asp-area="Pages" asp-controller="CRM" asp-action="Index" class="btn">Enter System</a>
+            </div>
+            <!-- logistics System Card -->
+            <div class="card" style="--card-color: #4B3F72;">
+                <img src="~/assets/images/systems/logistics(1).jpeg" alt="CRM System">
+                <h2>CRM System</h2>
+                <a asp-area="Pages" asp-controller="CRM" asp-action="Index" class="btn">Enter System</a>
+            </div>
+
+        </div>
+    </main>
+
+   
+
+</body>
+</html>

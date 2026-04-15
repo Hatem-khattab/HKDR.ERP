@@ -1,0 +1,28 @@
+﻿@inject IHttpContextAccessor HttpContextAccessor
+
+<div class="user-menu-container">
+    <span id="userLogo" class="User-pic">
+        <img src="~/assets/images/logo/human_logo.png"
+             class="logo"
+             alt="User" />
+    </span>
+
+    <div id="userMenuDropdown">
+        <div class="user-info">
+            @HttpContextAccessor.HttpContext.Session.GetString("UserEmail")<br />
+            @HttpContextAccessor.HttpContext.Session.GetString("CompanyName")
+            <small>@HttpContextAccessor.HttpContext.Session.GetString("CompanyName") - @HttpContextAccessor.HttpContext.Session.GetString("Role")</small>
+
+        </div>
+        <div class="user-extra">
+            <small>Last Login: @HttpContextAccessor.HttpContext.Session.GetString("LastLogin")</small><br />
+            <small>Current: @DateTime.Now.ToString("dddd, dd MMM yyyy HH:mm:ss")</small>
+        </div>
+        <form asp-area="Auth"
+              asp-controller="Auth"
+              asp-action="Logout"
+              method="post">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+</div>

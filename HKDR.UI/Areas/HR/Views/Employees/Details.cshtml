@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Detail</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Employee Detail</h1>
+        <button onclick="logout()">Logout</button>
+    </header>
+
+    <main>
+        <div id="employeeDetail"></div>
+        <button onclick="window.location.href='Index.html'">Back</button>
+    </main>
+
+    <script src="../../../../js/employee.js"></script>
+    <script>
+        const token = localStorage.getItem('accessToken');
+        if(!token) window.location.href='../../../index.html';
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const empId = urlParams.get('id');
+
+        async function loadEmployeeDetail(){
+            const res = await fetch(`https://localhost:7108/api/employees/${empId}`, {
+                headers:{ 'Authorization': `Bearer ${token}` }
+            });
+            const emp = await res.json();
+            const container = document.getElementById('employeeDetail');
+            container.innerHTML = `
+                <p><strong>Name:</strong> ${emp.fullName}</p>
+                <p><strong>Email:</strong> ${emp.email}</p>
+                <p><strong>Role:</strong> ${emp.role || ''}</p>
+                <p><strong>Department:</strong> ${emp.departmentName || ''}</p>
+                <p><strong>CompanyId:</strong> ${emp.companyId}</p>
+            `;
+        }
+
+        loadEmployeeDetail();
+    </script>
+</body>
+</html>

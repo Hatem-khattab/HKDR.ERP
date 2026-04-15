@@ -1,0 +1,62 @@
+﻿@model HKDR.UI.Areas.Auth.Models.LoginViewModel
+
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="~/css/login.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP System Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="login-container">
+        <section class="form-section">
+            <header class="top-bar">
+                <div class="logo">
+                    <img src="~/assets/images/logo/HKDR_LOGO.png" alt="UIUXOtor Logo">
+                    <span>ERP System</span>
+                </div>
+                <button class="btn-signup">Sign Up</button>
+            </header>
+
+            <div class="form-wrapper">
+                <h3>Welcome back!!</h3>
+                <h1>Please Sign In</h1>
+
+                <form asp-action="Login" method="post">
+                    <div class="input-group">
+                        <input type="text" name="Email" />
+                        <span asp-validation-for="Email"></span>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" name="Password" />
+                        </div>
+                    </div>
+
+                    <div class="form-footer">
+                        <label class="checkbox-container">
+                            <input type="checkbox"> Remember me
+                        </label>
+                        <a href="#" class="forgot-link">I forgot my password</a>
+                    </div>
+
+                    <button type="submit" class="btn-signin">Sign In</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="image-section">
+            <img src="~/assets/images/logo/erp_login.jpeg" alt="ERP_LOGIN_PICTURE">
+        </section>
+    </div>
+</body>
+</html>
+
+
+

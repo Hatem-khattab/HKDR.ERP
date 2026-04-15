@@ -1,0 +1,89 @@
+﻿/* Container Layout */
+.salary-container {
+    padding: 20px;
+    background-color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+    .header-section h2 {
+        color: #333;
+        font-weight: 600;
+    }
+
+/* Button Styling */
+.btn-create {
+    background: linear-gradient(to right, #2980b9, #2c3e50);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: opacity 0.3s;
+}
+
+    .btn-create:hover {
+        opacity: 0.9;
+        color: #f8f9fa;
+    }
+
+/* Table Styling */
+.salary-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+    .salary-table th {
+        text-align: left;
+        padding: 12px 15px;
+        color: #666;
+        border-bottom: 1px solid #eee;
+        font-weight: 600;
+    }
+
+    .salary-table td {
+        padding: 15px;
+        border-bottom: 1px solid #f5f5f5;
+        color: #444;
+    }
+
+    .salary-table tr:hover {
+        background-color: #fafafa;
+    }
+
+/* Status & Action Colors */
+.status-badge.active {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.status-badge.inactive {
+    color: #e74c3c;
+}
+
+.action-links a {
+    text-decoration: none;
+    margin-right: 10px;
+    font-weight: 500;
+}
+
+.edit-link {
+    color: #3498db;
+}
+
+.delete-link {
+    color: #e74c3c;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border-radius: 8px;
+}

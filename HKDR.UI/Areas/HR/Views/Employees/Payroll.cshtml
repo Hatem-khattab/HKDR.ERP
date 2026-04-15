@@ -1,0 +1,233 @@
+﻿@model HKDR.UI.Areas.HR.Models.Employee.PayrollViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Payroll Management";
+}
+
+<div class="container mt-4">
+    <h2>Payroll Management</h2>
+
+    <div class="mb-3">
+        <label for="monthSelect">Select Month:</label>
+        <input type="month"
+               id="monthSelect"
+               class="form-control"
+               value="@Model.SelectedMonth.ToString("yyyy-MM")" />
+    </div>
+
+    <button id="generatePayrollBtn" class="btn btn-success mb-3">
+        Generate Payroll for All
+    </button>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Employee Name</th>
+                <th>Basic Salary</th>
+                <th>Allowances</th>
+                <th>Deductions</th>
+                <th>Net Salary</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="payrollTableBody">
+            <!-- Loaded dynamically -->
+        </tbody>
+    </table>
+</div>
+
+<!-- Add Bonus Modal -->
+<div class="modal fade" id="bonusModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Bonus</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" id="bonusEmployeeId" />
+
+                <div class="mb-3">
+                    <label>Amount</label>
+                    <input type="number" id="bonusAmount" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label>Reason</label>
+                    <input type="text" id="bonusReason" class="form-control" />
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="saveBonusBtn" class="btn btn-success">Save</button>
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // ✅ خذ التوكن من السيرفر مرة واحدة
+        const token = localStorage.getItem('token'); // هذا يجب أن يكون موجود من صفحة تسجيل الدخول
+        if (!token) {
+            alert("You are not logged in");
+        }
+        const apiUrl = 'https://localhost:7108/api/hr/payroll';
+
+        // =========================
+        // Helpers
+        // =========================
+        function getMonthDate() {
+            const monthValue = document.getElementById('monthSelect').value;
+            if (!monthValue) return null;
+            return monthValue + "-01"; // yyyy-MM-01
+        }
+
+        function getYearMonth() {
+            const monthValue = document.getElementById('monthSelect').value;
+            if (!monthValue) return null;
+            const [year, month] = monthValue.split('-');
+            return { year: parseInt(year), month: parseInt(month) };
+        }
+
+        // =========================
+        // LOAD PAYROLL
+        // =========================
+        async function loadPayroll() {
+            if(!token) return alert("You are not logged in");
+
+            const ym = getYearMonth();
+            if(!ym) return alert("Please select a month first");
+
+            try {
+                const response = await fetch(`${apiUrl}?year=${ym.year}&month=${ym.month}`, {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+
+                if(!response.ok) {
+                    const errorText = await response.text();
+                    console.error(errorText);
+                    alert("Failed to load payroll");
+                    return;
+                }
+
+                const data = await response.json();
+                console.log('Payroll API data:', data);
+
+                const tbody = document.getElementById('payrollTableBody');
+                tbody.innerHTML = '';
+
+                data.forEach(p => {
+                    tbody.innerHTML += `
+                        <tr data-id="${p.employeeId}">
+                            <td>${p.employeeId}</td>
+                            <td>${p.employee?.fullName ?? ''}</td>
+                            <td>${(p.basicSalary ?? 0).toFixed(2)}</td>
+                            <td>${(p.allowances ?? 0).toFixed(2)}</td>
+                            <td>${((p.taxAmount ?? 0) + (p.otherDeductions ?? 0)).toFixed(2)}</td>
+                            <td>${(p.netSalary ?? 0).toFixed(2)}</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm viewPayslipBtn">Payslip</button>
+                                <button class="btn btn-warning btn-sm addBonusBtn">Add Bonus</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                bindButtons();
+
+            } catch(ex) {
+                console.error(ex);
+                alert("Error loading payroll");
+            }
+        }
+
+        // =========================
+        // GENERATE PAYROLL
+        // =========================
+        document.getElementById('generatePayrollBtn').addEventListener('click', async () => {
+            if(!token) return alert("You are not logged in");
+
+            const month = getMonthDate();
+            if(!month) return alert("Please select a month first");
+
+            try {
+                const response = await fetch(`${apiUrl}/generate?month=${month}`, {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+
+                if(!response.ok) {
+                    const errorText = await response.text();
+                    console.error(errorText);
+                    alert("Error generating payroll");
+                    return;
+                }
+
+                alert("Payroll generated successfully");
+                loadPayroll();
+
+            } catch(ex) {
+                console.error(ex);
+                alert("Error generating payroll");
+            }
+        });
+
+        // =========================
+        // BONUS / PAYSLIP BUTTONS
+        // =========================
+        function bindButtons() {
+            document.querySelectorAll('.addBonusBtn').forEach(btn => {
+                btn.onclick = e => {
+                    const tr = e.target.closest('tr');
+                    document.getElementById('bonusEmployeeId').value = tr.dataset.id;
+                    new bootstrap.Modal(document.getElementById('bonusModal')).show();
+                };
+            });
+
+            document.querySelectorAll('.viewPayslipBtn').forEach(btn => {
+                btn.onclick = async e => {
+                    if(!token) return alert("You are not logged in");
+
+                    const employeeId = e.target.closest('tr').dataset.id;
+                    const month = getMonthDate();
+                    if(!month) return alert("Please select a month first");
+
+                    try {
+                        const response = await fetch(`${apiUrl}/${employeeId}/payslip?month=${month}`, {
+                            headers: { 'Authorization': 'Bearer ' + token }
+                        });
+
+                        if(!response.ok) {
+                            const errorText = await response.text();
+                            console.error(errorText);
+                            alert("Error loading payslip");
+                            return;
+                        }
+
+                        const p = await response.json();
+                        alert(`Net Salary: ${p.netSalary}`);
+
+                    } catch(ex) {
+                        console.error(ex);
+                        alert("Error loading payslip");
+                    }
+                };
+            });
+        }
+
+        // =========================
+        // Event Listeners
+        // =========================
+        document.getElementById('monthSelect').addEventListener('change', loadPayroll);
+
+        // Initial load
+        loadPayroll();
+
+    </script>
+}

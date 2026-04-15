@@ -1,0 +1,80 @@
+﻿@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HKDR.UI</title>
+    <link href="~/css/system-selection.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="left">
+            <span class="logo">
+                <img src="~/assets/images/logo/hkdr_logo.png" alt="HKDR Logo" />
+            </span>
+            <span class="system-name">HR Management</span>
+        </div>
+
+        <div class="right">
+            <input type="text" placeholder="Search..." class="search" />
+            @inject IHttpContextAccessor HttpContextAccessor
+
+            <div class="user-menu-container">
+                <span class="User-pic" id="userLogo">
+                    <img src="~/assets/images/logo/human_logo.png" alt="User Logo" class="logo" />
+                </span>
+
+                <div id="userMenuDropdown">
+                    <div class="user-info">
+                        <strong>@HttpContextAccessor.HttpContext.Session.GetString("UserName")</strong><br />
+                        <small>@HttpContextAccessor.HttpContext.Session.GetString("UserEmail")</small><br />
+                        <small>@HttpContextAccessor.HttpContext.Session.GetString("CompanyName") - @HttpContextAccessor.HttpContext.Session.GetString("Role")</small>
+                    </div>
+                    <div class="user-extra">
+                        <small>Last Login: @HttpContextAccessor.HttpContext.Session.GetString("LastLogin")</small><br />
+                        <small>Current: @DateTime.Now.ToString("dddd, dd MMM yyyy HH:mm:ss")</small>
+                    </div>
+                    <form asp-area="Auth" asp-controller="Auth" asp-action="Login" method="post">
+                        <button type="submit">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </header>
+   
+
+    
+    <main class="container pb-3">
+        @RenderBody()
+    </main>
+
+    <footer class="app-footer">
+        © 2026 HKDR DIGITAL Solutions
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const logo = document.getElementById("userLogo");
+            const dropdown = document.getElementById("userMenuDropdown");
+
+            if (!logo || !dropdown) return;
+
+            logo.addEventListener("click", function (e) {
+                e.stopPropagation();
+                dropdown.classList.toggle("show");
+            });
+
+            document.addEventListener("click", function () {
+                dropdown.classList.remove("show");
+            });
+        });
+    </script>
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

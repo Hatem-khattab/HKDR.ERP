@@ -1,0 +1,316 @@
+﻿html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    height: 100%;
+    margin: 0;
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    height: 100%;
+    display:flex;
+    flex-direction:column;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff;
+}
+
+.form-card {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+}
+.span{
+    color:grey;
+}
+    .form-card label {
+        display: block;
+        margin-top: 10px;
+        font-weight: 600;
+    }
+
+    .form-card input,
+    .form-card select {
+        width: 100%;
+        padding: 8px;
+    }
+.app-header {
+    margin-top:10px;
+    height: 56px;
+    background: var(--primary);
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+    .app-header .left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+.logo {
+    height: 100px;
+    width: 100px;
+    font-weight: bold;
+    font-size: 18px;
+}
+    .logo img {
+        height: 100px;
+        width: 100px;
+    }
+
+.system-name {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.app-header .right {
+    height: 68px;
+    width: 270px;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+
+.search {
+    padding: 6px 10px;
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+
+.User-pic {
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+}
+    .User-pic img {
+        height: 50px;
+        width: 50px;
+    }
+
+.user {
+    cursor: pointer;
+}
+.content {
+    min-height: calc(100vh - 96px);
+    padding: 20px;
+}
+
+/*----------------------------------- login css ------------------------------*/
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-card {
+    width: 360px;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    text-align: center;
+}
+
+.logo {
+    width: 80px;
+    margin-bottom: 15px;
+}
+
+h2 {
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #777;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+    input:focus {
+        outline: none;
+        border-color: #0f766e;
+    }
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #0f766e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+    button:hover {
+        background: #115e59;
+    }
+
+.error {
+    color: #dc2626;
+    font-size: 13px;
+}
+
+    .error.general {
+        margin-top: 10px;
+    }
+
+
+
+
+
+/*----------------------------------- header ------------------------------*/
+.user-menu-container {
+    position: relative;
+    display: inline-block;
+}
+
+.User-pic img.logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #0078D4;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+    .User-pic img.logo:hover {
+        transform: scale(1.05);
+    }
+
+#userMenuDropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 60px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    width: 220px;
+    z-index: 1000;
+    padding: 10px 15px;
+    font-family: Arial, sans-serif;
+}
+
+    #userMenuDropdown div:first-child {
+        color:grey;
+        font-weight: bold;
+        margin-bottom: 10px;
+        word-wrap: break-word;
+    }
+
+    #userMenuDropdown form button {
+        width: 100%;
+        padding: 8px 12px;
+        background-color: #0078D4;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+        #userMenuDropdown form button:hover {
+            background-color: #005a9e;
+        }
+    #userMenuDropdown.show {
+        display: block;
+    }
+/* معلومات المستخدم */
+.user-info strong {
+    display: block;
+    font-size: 1rem;
+    color: #333;
+}
+
+.user-info .email,
+.user-info .company-role {
+    font-size: 0.85rem;
+    color: #555;
+    margin-top: 2px;
+}
+
+/* معلومات إضافية */
+.user-extra {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* فواصل */
+#userMenuDropdown hr {
+    margin: 8px 0;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+/* زر تسجيل الخروج */
+.logout-btn {
+    width: 100%;
+    padding: 8px 0;
+    background-color: #0078D4;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+/*----------------------------------- FOOTER ------------------------------*/
+.app-footer {
+    height: 40px;
+    background: var(--light-bg);
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    font-size: 13px;
+}
+
+    .app-footer a {
+        color: var(--text-muted);
+        text-decoration: none;
+        margin-left: 10px;
+    }
+
+        .app-footer a:hover {
+            color: var(--secondary);
+        }
+
+
+
+

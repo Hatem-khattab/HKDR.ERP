@@ -1,0 +1,204 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "System Selection";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payroll Dashboard</title>
+    <link rel="stylesheet" href="~/css/hr-dashboard.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+       
+        <header class="nav-header">
+            <div class="header-container">
+                <div class="brand-logo">
+                    <img src="~/assets/images/logo/HKDR_LOGO.png" alt="UIUXOtor Logo">
+                    <div class="brand-text">
+                        <span class="brand-name">HKDR</span>
+                        <span class="brand-subtext">ERP System</span>
+                    </div>
+                </div>
+
+                <nav class="top-nav">
+                    <ul class="nav-list">
+                        <li>
+                            <a href="/HR/HrDashBoard/HrDashBoard" class="btn btn-primary">
+                                <i class="fa-solid fa-gauge-high"></i> Dash Board
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="HR"
+                               asp-controller="Employees"
+                               asp-action="Index"
+                               class="btn-nav">
+                                View Employees
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="HR" asp-controller="Employees" asp-action="SalaryDef">
+                                <i class="icon-staff"></i> Salary Definition
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="HR" asp-controller="Employees" asp-action="Payroll">
+                                <i class="icon-staff"></i> Payroll
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div class="stats-grid">
+            <div class="card stat-card">
+                <div class="stat-content">
+                    <label>Gross salary this month</label>
+                    <h2>@Model.GrossSalaryThisMonth.ToString("N2")</h2>
+                    html
+                    Copy code
+
+                    <p class="trend up">↑ 2.1% more than last month</p>
+                </div>
+                <div class="icon-box gold">💰</div>
+            </div>
+
+            <div class="card stat-card">
+                <div class="stat-content">
+                    <label>Total Employees</label>
+                    <h2>@Model.TotalEmployees</h2>
+
+                    <p class="trend up">↑ 2.1% more than last month</p>
+                </div>
+                <div class="icon-box blue">💵</div>
+            </div>
+
+            <div class="card chart-container">
+                <h3>Annual payroll summary</h3>
+                <canvas id="payrollChart"></canvas>
+            </div>
+
+            <div class="card stat-card">
+                <div class="stat-content">
+                    <label>Total Tax This Month</label>
+                    <h2>@Model.TotalTaxThisMonth.ToString("N2")</h2>
+                    <p class="trend down">↓ مقارنة بالشهر الماضي</p>
+                </div>
+                <div class="icon-box red">🧾</div>
+            </div>
+
+            <div class="card stat-card">
+                <div class="stat-content">
+                    <label>Total Loans This Month</label>
+                    <h2>@Model.TotalLoansThisMonth.ToString("N2")</h2>
+                    <p class="trend down">↓ مقارنة بالشهر الماضي</p>
+                </div>
+                <div class="icon-box blue">🏦</div>
+            </div>
+        </div>
+
+        <nav class="tabs">
+            <a href="#" class="active">Salary Breakdown</a>
+            <a href="#">Tax Definitions</a>
+            <a href="#">Payslips</a>
+            <a href="#">Payroll</a>
+        </nav>
+
+        <section class="table-section">
+            <div class="table-header">
+                <h3>Salary Definition</h3>
+                <button class="btn-primary">Create Salary Definition</button>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Title</th>
+                            <th>Level</th>
+                            <th>Basic Salary</th>
+                            <th>Allowance</th>
+                            <th>Gross Salary</th>
+                            <th>Deductions</th>
+                            <th>Net Salary</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="salaryTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer>
+            Copyright © 2022 Relia Energy. All Rights Reserved
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+<script>
+
+        // Chart Initialization
+    const ctx = document.getElementById('payrollChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [
+                { label: 'Net salary', data: [300, 400, 380, 320, 340, 330, 420, 380, 300, 460, 420, 440], backgroundColor: '#2B89C5' },
+                { label: 'Tax', data: [50, 60, 40, 50, 40, 40, 60, 50, 40, 70, 60, 80], backgroundColor: '#F59E0B' },
+                { label: 'Loan', data: [10, 30, 0, 0, 30, 0, 0, 0, 0, 0, 0, 60], backgroundColor: '#8B5CF6' }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: { stacked: true, grid: { display: false } },
+                y: { stacked: true, beginAtZero: true, ticks: { callback: v => v + 'k' } }
+            },
+            plugins: {
+                legend: { position: 'top', align: 'end', labels: { usePointStyle: true } }
+            }
+        }
+    });
+
+    // Table Data Population
+    const tableData = [
+        { sn: '01', title: 'Managing Director', level: 'MD/CEO', basic: '₦445,331', allowance: '₦600,000', gross: '₦1,145,331', ded: '₦224,000', net: '₦224,000' },
+        { sn: '02', title: 'Executive Director', level: 'ED', basic: '₦395,000', allowance: '₦197,500', gross: '₦1,145,331', ded: '₦224,000', net: '₦224,000' },
+        // Repeat as needed...
+    ];
+
+    const tbody = document.getElementById('salaryTableBody');
+    // Loop to generate rows (simulating the 11 rows in screenshot)
+    for(let i=1; i<=11; i++) {
+        const row = tableData[0]; // Use first object as template
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${i.toString().padStart(2, '0')}</td>
+            <td>${i === 2 ? 'Executive Director' : 'Managing Director'}</td>
+            <td>${i === 2 ? 'ED' : 'MD/CEO'}</td>
+            <td>${row.basic}</td>
+            <td>${row.allowance}</td>
+            <td>${row.gross}</td>
+            <td>${row.ded}</td>
+            <td>${row.net}</td>
+            <td class="action-links">
+                <a href="#" class="edit">Edit</a>
+                <a href="#" class="delete">Delete</a>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    }
+
+
+</script>
+</html>

@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Employee</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Edit Employee</h1>
+        <button onclick="logout()">Logout</button>
+    </header>
+
+    <main>
+        <form id="editForm">
+            <input type="text" id="fullName" placeholder="Full Name" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="text" id="role" placeholder="Role">
+            <input type="text" id="department" placeholder="Department">
+            <button type="submit">Update Employee</button>
+        </form>
+        <p id="message"></p>
+    </main>
+
+    <script src="../../../../js/employee.js"></script>
+    <script>
+        const token = localStorage.getItem('accessToken');
+        if(!token) window.location.href='../../../index.html';
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const empId = urlParams.get('id');
+
+        async function loadEmployee(){
+            const res = await fetch(`https://localhost:7108/api/employees/${empId}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const emp = await res.json();
+            document.getElementById('fullName').value = emp.fullName;
+            document.getElementById('email').value = emp.email;
+            document.getElementById('role').value = emp.role || '';
+            document.getElementById('department').value = emp.departmentName || '';
+        }
+
+        document.getElementById('editForm').addEventListener('submit', async (e)=>{
+            e.preventDefault();
+            const emp = {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                role: document.getElementById('role').value,
+                departmentName: document.getElementById('department').value
+            };
+            const res = await fetch(`https://localhost:7108/api/employees/${empId}`, {
+                method:'PUT',
+                headers:{
+                    'Content-Type':'application/json',
+                    'Authorization':`Bearer ${token}`
+                },
+                body:JSON.stringify(emp)
+            });
+            if(res.ok){ window.location.href='Index.html'; }
+            else{ document.getElementById('message').textContent = await res.text(); }
+        });
+
+        loadEmployee();
+    </script>
+</body>
+</html>
