@@ -4,7 +4,52 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Payroll Management";
 }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payroll Dashboard</title>
+    <link rel="stylesheet" href="~/css/hr-dashboard.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<header class="nav-header">
+    <div class="header-container">
+        <div class="brand-logo">
+            <img src="~/assets/images/logo/HKDR_LOGO.png" alt="UIUXOtor Logo">
+            <div class="brand-text">
+                <span class="brand-name">HKDR</span>
+                <span class="brand-subtext">ERP System</span>
+            </div>
+        </div>
 
+        <nav class="top-nav">
+            <ul class="nav-list">
+                <li>
+                    <a href="/HR/HrDashBoard/HrDashBoard" class="btn btn-primary">
+                        <i class="fa-solid fa-gauge-high"></i> Dash Board
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="HR"
+                       asp-controller="Employees"
+                       asp-action="Index"
+                       class="btn-nav">
+                        View Employees
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="HR" asp-controller="Employees" asp-action="SalaryDef">
+                        <i class="icon-staff"></i> Salary Definition
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="HR" asp-controller="Employees" asp-action="Payroll">
+                        <i class="icon-staff"></i> Payroll
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
 <div class="container mt-4">
     <h2>Payroll Management</h2>
 

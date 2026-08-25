@@ -1,61 +1,137 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Employee</title>
-    <link rel="stylesheet" href="../../../../css/styles.css">
-</head>
-<body>
-    <header>
-        <h1>Add New Employee</h1>
-        <button onclick="logout()">Logout</button>
-    </header>
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "System Selection";
+}
 
-    <main>
-        <form id="createForm">
-            <input type="text" id="fullName" placeholder="Full Name" required>
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <input type="text" id="role" placeholder="Role">
-            <input type="text" id="department" placeholder="Department">
-            <button type="submit">Create Employee</button>
-        </form>
-        <p id="message"></p>
-    </main>
+@model HKDR.UI.Areas.HR.Models.Employee.CreateEmployeeViewModel
 
-    <script src="../../../../js/employee.js"></script>
-    <script>
-        const token = localStorage.getItem('accessToken');
-        if (!token) window.location.href = '../../../index.html';
+@{
+    ViewData["Title"] = "Create Employee";
+<link href="~/css/create.css" rel="stylesheet" />
+    <link href="~/css/hr-dashboard.css" rel="stylesheet" />
+}
 
-        document.getElementById('createForm').addEventListener('submit', async (e)=>{
-            e.preventDefault();
-            const emp = {
-                fullName: document.getElementById('fullName').value,
-                email: document.getElementById('email').value,
-                password: document.getElementById('password').value,
-                role: document.getElementById('role').value,
-                departmentName: document.getElementById('department').value
-            };
+<header class="nav-header">
+    <div class="header-container">
+        <div class="brand-logo">
+            <img src="~/assets/images/logo/HKDR_LOGO.png" alt="UIUXOtor Logo">
+            <div class="brand-text">
+                <span class="brand-name">HKDR</span>
+                <span class="brand-subtext">ERP System</span>
+            </div>
+        </div>
 
-            try {
-                const res = await fetch('https://localhost:7108/api/employees', {
-                    method:'POST',
-                    headers: {
-                        'Content-Type':'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify(emp)
-                });
-                if(res.ok){
-                    window.location.href = 'Index.html';
-                } else {
-                    const err = await res.text();
-                    document.getElementById('message').textContent = err;
-                }
-            } catch(err){ console.error(err) }
-        });
-    </script>
-</body>
-</html>
+        <nav class="top-nav">
+            <ul class="nav-list">
+                <li>
+                    <a href="/HR/HrDashBoard/HrDashBoard" class="btn btn-primary">
+                        <i class="fa-solid fa-gauge-high"></i> Dash Board
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="HR"
+                       asp-controller="Employees"
+                       asp-action="Index"
+                       class="btn-nav">
+                        View Employees
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="HR" asp-controller="Employees" asp-action="SalaryDef">
+                        <i class="icon-staff"></i> Salary Definition
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="HR" asp-controller="Employees" asp-action="Payroll">
+                        <i class="icon-staff"></i> Payroll
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<h2>
+    Add New Employee</h2>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+    <div class="add-emp-container"> 
+    <!-- Employee Number -->
+    <div class="item">
+        <label>Employee Number</label>
+        <input asp-for="EmployeeNumber" class="form-control" />
+        <span asp-validation-for="EmployeeNumber" class="text-danger"></span>
+    </div>
+
+    <!-- Full Name -->
+    <div class="item">
+        <label>Full Name</label>
+        <input asp-for="FullName" class="form-control" />
+        <span asp-validation-for="FullName" class="text-danger"></span>
+    </div>
+
+    <!-- Email -->
+    <div class="item">
+        <label>Email</label>
+        <input asp-for="Email" type="email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <!-- Phone -->
+    <div class="item">
+        <label>Phone Number</label>
+        <input asp-for="PhoneNumber" class="form-control" />
+    </div>
+
+    <!-- Department -->
+    <div class="item">
+        <label>Department</label>
+        <select asp-for="DepartmentId" asp-items="Model.Departments" class="form-control">
+            <option value="">-- Select Department --</option>
+        </select>
+        <span asp-validation-for="DepartmentId" class="text-danger"></span>
+    </div>
+
+    <!-- Job Title -->
+    <div class="item">
+        <label>Job Title</label>
+        <input asp-for="JobTitle" class="form-control" />
+        <span asp-validation-for="JobTitle" class="text-danger"></span>
+    </div>
+
+    <!-- Hire Date -->
+    <div class="item">
+        <label>Hire Date</label>
+        <input asp-for="HireDate" type="date" class="form-control" />
+        <span asp-validation-for="HireDate" class="text-danger"></span>
+    </div>
+
+    <!-- Salary -->
+    <div class="item">
+        <label>Basic Salary</label>
+        <input asp-for="BasicSalary" type="number" step="0.01" class="form-control" />
+        <span asp-validation-for="BasicSalary" class="text-danger"></span>
+    </div>
+    </div>
+    <br />
+        <button type="submit" class="btn-create ">Create Employee</button>
+        <a asp-action="Index" class="btn-create ">Cancel</a>
+
+   
+
+
+</form>
+
+@if (TempData["Error"] != null)
+{
+    <p class="text-danger">@TempData["Error"]</p>
+}
+
+@if (TempData["Success"] != null)
+{
+    <p class="text-success">@TempData["Success"]</p>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

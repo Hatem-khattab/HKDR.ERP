@@ -35,8 +35,11 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/HR/Employees/Index" class="btn btn-primary">
-                            <i class="fa-solid fa-gauge-high"></i> Dash Board
+                        <a asp-area="HR"
+                           asp-controller="Employees"
+                           asp-action="Index"
+                           class="btn-nav">
+                            View Employees
                         </a>
                     </li>
                     <li>
@@ -44,12 +47,11 @@
                             <i class="icon-staff"></i> Salary Definition
                         </a>
                     </li>
-                    <li class="active"><a href="#"><i class="icon-payroll"></i> Payroll</a></li>
-                    <li><a href="#"><i class="icon-memo"></i> Memo</a></li>
-                    <li><a href="#"><i class="icon-circulars"></i> Circulars</a></li>
-                    <li><a href="#"><i class="icon-maintenance"></i> Maintenance</a></li>
-                    <li><a href="#"><i class="icon-logistics"></i> Logistics</a></li>
-                    <li><a href="#"><i class="icon-notif"></i> Notifications</a></li>
+                    <li>
+                        <a asp-area="HR" asp-controller="Employees" asp-action="Payroll">
+                            <i class="icon-staff"></i> Payroll
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>

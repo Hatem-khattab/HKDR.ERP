@@ -113,10 +113,11 @@ public class EmployeesController : Controller
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
+       
+
         var employee = await _employeeService.GetByIdAsync(id);
         if (employee == null)
             return NotFound();
-
         var model = new EditEmployeeViewModel
         {
             Id = employee.Id,
@@ -125,7 +126,7 @@ public class EmployeesController : Controller
             DepartmentId = employee.DepartmentId,
             Departments = await LoadDepartmentsAsync()
         };
-
+        Console.WriteLine("POST HIT");
         return View(model);
     }
 
@@ -133,11 +134,13 @@ public class EmployeesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(EditEmployeeViewModel model)
     {
+      
         if (!ModelState.IsValid)
         {
             model.Departments = await LoadDepartmentsAsync();
             return View(model);
         }
+        Console.WriteLine("POST HIT");
 
         try
         {

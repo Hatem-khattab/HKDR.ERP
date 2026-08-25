@@ -16,47 +16,48 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
-    <header class="nav-header">
-        <div class="header-container">
-            <div class="brand-logo">
-                <img src="~/assets/images/logo/HKDR_LOGO.png" alt="UIUXOtor Logo">
-                <div class="brand-text">
-                    <span class="brand-name">HKDR</span>
-                    <span class="brand-subtext">ERP System</span>
-                </div>
-            </div>
 
-            <nav class="top-nav">
-                <ul class="nav-list">
-                    <li>
-                        <a href="/HR/HrDashBoard/HrDashBoard" class="btn btn-primary">
-                            <i class="fa-solid fa-gauge-high"></i> Dash Board
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-area="HR"
-                           asp-controller="Employees"
-                           asp-action="Index"
-                           class="btn-nav">
-                            View Employees
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-area="HR" asp-controller="Employees" asp-action="SalaryDef">
-                            <i class="icon-staff"></i> Salary Definition
-                        </a>
-                    </li>
-                    <li class="active"><a href="#"><i class="icon-payroll"></i> Payroll</a></li>
-                    <li><a href="#"><i class="icon-memo"></i> Memo</a></li>
-                    <li><a href="#"><i class="icon-circulars"></i> Circulars</a></li>
-                    <li><a href="#"><i class="icon-maintenance"></i> Maintenance</a></li>
-                    <li><a href="#"><i class="icon-logistics"></i> Logistics</a></li>
-                    <li><a href="#"><i class="icon-notif"></i> Notifications</a></li>
-                </ul>
-            </nav>
+<header class="nav-header">
+    <div class="header-container">
+        <div class="brand-logo">
+            <img src="~/assets/images/logo/HKDR_LOGO.png" alt="UIUXOtor Logo">
+            <div class="brand-text">
+                <span class="brand-name">HKDR</span>
+                <span class="brand-subtext">ERP System</span>
+            </div>
         </div>
-    </header>
+
+        <nav class="top-nav">
+            <ul class="nav-list">
+                <li>
+                    <a href="/HR/HrDashBoard/HrDashBoard" class="btn btn-primary">
+                        <i class="fa-solid fa-gauge-high"></i> Dash Board
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="HR"
+                       asp-controller="Employees"
+                       asp-action="Index"
+                       class="btn-nav">
+                        View Employees
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="HR" asp-controller="Employees" asp-action="SalaryDef">
+                        <i class="icon-staff"></i> Salary Definition
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="HR" asp-controller="Employees" asp-action="Payroll">
+                        <i class="icon-staff"></i> Payroll
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<body>
+    
 <div class="page-container">
     
 

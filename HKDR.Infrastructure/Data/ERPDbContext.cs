@@ -86,7 +86,8 @@ namespace HKDR.Infrastructure.Data
        ) where TEntity : BaseEntity
         {
             modelBuilder.Entity<TEntity>()
-                .HasQueryFilter(e => e.CompanyId == context._currentCompany.CompanyId);
+                .HasQueryFilter(e => true);
+                //.HasQueryFilter(e => e.CompanyId == context._currentCompany.CompanyId);
         }
 
 

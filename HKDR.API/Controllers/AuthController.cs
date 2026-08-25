@@ -74,6 +74,7 @@ namespace HKDR.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto dto)
         {
+
             // 1️⃣ التحقق من وجود المستخدم
             var user = await _userManager.FindByEmailAsync(dto.Email);
             if (user == null || !await _userManager.CheckPasswordAsync(user, dto.Password))
@@ -88,7 +89,6 @@ namespace HKDR.API.Controllers
             // 4️⃣ توليد Refresh Token وحفظه مباشرة في DB
             var refreshToken = _tokenService.GenerateRefreshToken(user);
 
-
             // 5️⃣ إرجاع النتيجة
             return Ok(new
             {
@@ -97,6 +97,7 @@ namespace HKDR.API.Controllers
                 roles,
                 companyId = user.CompanyId
             });
+
         }
 
         [HttpPost("refresh")]
